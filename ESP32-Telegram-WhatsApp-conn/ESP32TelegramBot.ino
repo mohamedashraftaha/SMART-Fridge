@@ -2,11 +2,11 @@
 #include <WiFiClientSecure.h>
 #include <UniversalTelegramBot.h>
 #include <ArduinoJson.h>
-const char* ssid = "ashraf"; //replace with your SSID
-const char* password = "m12345678"; //replace with your password
+const char* ssid = "*************"; //replace with your SSID
+const char* password = "*************"; //replace with your password
 
-#define BOTtoken "5120278889:AAFdbTmIuG92lGxada088Uhx_Q7_ReiUdsk"  
-#define CHAT_ID "5213002856"
+#define BOTtoken "***************************************"  
+#define CHAT_ID "*************"
 #define ONBOARD_LED  2
 WiFiClientSecure client;
 UniversalTelegramBot bot(BOTtoken, client);
