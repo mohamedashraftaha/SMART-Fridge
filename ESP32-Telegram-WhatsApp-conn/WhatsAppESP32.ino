@@ -1,14 +1,14 @@
 #include <WiFi.h>
 #include <ThingESP.h>
 
-ThingESP32 thing("mohamedashraf","WhatsAppESP32", "123456789");
+ThingESP32 thing("*************","*************", "*************");
 #define LED  2
 
 void setup() {
   // put your setup code here, to run once:
 Serial.begin(115200);
 pinMode(LED, OUTPUT);
-thing.SetWiFi("ashraf","m12345678");
+thing.SetWiFi("*************","*************");
 thing.initDevice();
 }
 String HandleResponse(String query)
