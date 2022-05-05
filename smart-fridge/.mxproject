@@ -9,17 +9,17 @@ CDefines=USE_HAL_DRIVER;STM32L432xx;USE_HAL_DRIVER;USE_HAL_DRIVER;
 [PreviousGenFiles]
 AdvancedFolderStructure=true
 HeaderFileListSize=3
-HeaderFiles#0=H:/Uni/Spring 22/CSCE4301 - Embedded Systems/Project/SMART-Fridge/smart-fridge/Core/Inc/stm32l4xx_it.h
-HeaderFiles#1=H:/Uni/Spring 22/CSCE4301 - Embedded Systems/Project/SMART-Fridge/smart-fridge/Core/Inc/stm32l4xx_hal_conf.h
-HeaderFiles#2=H:/Uni/Spring 22/CSCE4301 - Embedded Systems/Project/SMART-Fridge/smart-fridge/Core/Inc/main.h
+HeaderFiles#0=F:/Mohamed/Spring 22/Embedded Systems/SMART-Fridge/smart-fridge/Core/Inc/stm32l4xx_it.h
+HeaderFiles#1=F:/Mohamed/Spring 22/Embedded Systems/SMART-Fridge/smart-fridge/Core/Inc/stm32l4xx_hal_conf.h
+HeaderFiles#2=F:/Mohamed/Spring 22/Embedded Systems/SMART-Fridge/smart-fridge/Core/Inc/main.h
 HeaderFolderListSize=1
-HeaderPath#0=H:/Uni/Spring 22/CSCE4301 - Embedded Systems/Project/SMART-Fridge/smart-fridge/Core/Inc
+HeaderPath#0=F:/Mohamed/Spring 22/Embedded Systems/SMART-Fridge/smart-fridge/Core/Inc
 HeaderFiles=;
 SourceFileListSize=3
-SourceFiles#0=H:/Uni/Spring 22/CSCE4301 - Embedded Systems/Project/SMART-Fridge/smart-fridge/Core/Src/stm32l4xx_it.c
-SourceFiles#1=H:/Uni/Spring 22/CSCE4301 - Embedded Systems/Project/SMART-Fridge/smart-fridge/Core/Src/stm32l4xx_hal_msp.c
-SourceFiles#2=H:/Uni/Spring 22/CSCE4301 - Embedded Systems/Project/SMART-Fridge/smart-fridge/Core/Src/main.c
+SourceFiles#0=F:/Mohamed/Spring 22/Embedded Systems/SMART-Fridge/smart-fridge/Core/Src/stm32l4xx_it.c
+SourceFiles#1=F:/Mohamed/Spring 22/Embedded Systems/SMART-Fridge/smart-fridge/Core/Src/stm32l4xx_hal_msp.c
+SourceFiles#2=F:/Mohamed/Spring 22/Embedded Systems/SMART-Fridge/smart-fridge/Core/Src/main.c
 SourceFolderListSize=1
-SourcePath#0=H:/Uni/Spring 22/CSCE4301 - Embedded Systems/Project/SMART-Fridge/smart-fridge/Core/Src
+SourcePath#0=F:/Mohamed/Spring 22/Embedded Systems/SMART-Fridge/smart-fridge/Core/Src
 SourceFiles=;
 
