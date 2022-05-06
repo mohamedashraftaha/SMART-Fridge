@@ -112,7 +112,7 @@ int main(void)
 	 HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
 	 HAL_ADCEx_Calibration_Start(&hadc1, ADC_CHANNEL_9);
 	 TIM2->CCR1 = 50; /* 50% duty cycle*/
-	 HAL_UART_Receive_IT(&huart2, &rxtemp,sizeof(rxtemp));
+	 HAL_UART_Receive_IT(&huart1, &rxtemp,sizeof(rxtemp));
 
   /* USER CODE END 2 */
 
@@ -480,10 +480,10 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
 	
-	if( huart == &huart2){
+	if( huart == &huart1){
 		
 		TIM2->CCR1 = (rxtemp == '1') ? 25 : (rxtemp == '2') ? 50 : (rxtemp =='3') ? 75 : 99;			
-		HAL_UART_Receive_IT(&huart2, &rxtemp,sizeof(rxtemp));
+		HAL_UART_Receive_IT(&huart1, &rxtemp,sizeof(rxtemp));
 
 	
 	}

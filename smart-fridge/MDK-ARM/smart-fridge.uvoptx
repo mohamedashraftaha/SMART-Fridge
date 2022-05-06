@@ -152,9 +152,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>485</LineNumber>
+          <LineNumber>483</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134231998</Address>
+          <Address>134232392</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -163,23 +163,23 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>../Core/Src/main.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\smart_fridge\../Core/Src/main.c\485</Expression>
+          <Expression>\\smart_fridge\../Core/Src/main.c\483</Expression>
         </Bp>
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>483</LineNumber>
+          <LineNumber>486</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
+          <Address>134232422</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
+          <BreakIfRCount>1</BreakIfRCount>
           <Filename>../Core/Src/main.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression></Expression>
+          <Expression>\\smart_fridge\../Core/Src/main.c\486</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -192,6 +192,16 @@
           <count>1</count>
           <WinNumber>1</WinNumber>
           <ItemText>test,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>2</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>rxtemp,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>3</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>((TIM_TypeDef *) ((0x40000000UL) + 0x0000UL))-&gt;CCR1,0x0A</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>
