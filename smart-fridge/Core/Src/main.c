@@ -54,6 +54,10 @@ float raw =0;
 float TempValue =0;
 uint8_t uartBuff[100] = {0};
 uint8_t rxtemp;
+uint8_t TxData = 0, RxData;
+uint8_t RxBuff[2];
+uint16_t force;
+uint8_t uartBuff_force[10];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -70,6 +74,33 @@ static void MX_TIM2_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+void ch9_sel(void){
+	ADC_ChannelConfTypeDef sConfig = {0};
+  sConfig.Channel = ADC_CHANNEL_9;
+  sConfig.Rank = ADC_REGULAR_RANK_1;
+  sConfig.SamplingTime = ADC_SAMPLETIME_92CYCLES_5;
+  sConfig.SingleDiff = ADC_SINGLE_ENDED;
+  sConfig.OffsetNumber = ADC_OFFSET_NONE;
+  sConfig.Offset = 0;
+	if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+}
+
+void ch11_sel(void){
+  ADC_ChannelConfTypeDef sConfig = {0};
+	sConfig.Channel = ADC_CHANNEL_11;
+  sConfig.Rank = ADC_REGULAR_RANK_1;
+  sConfig.SamplingTime = ADC_SAMPLETIME_92CYCLES_5;
+	sConfig.SingleDiff = ADC_SINGLE_ENDED;
+  sConfig.OffsetNumber = ADC_OFFSET_NONE;
+  sConfig.Offset = 0;
+  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+}
 /* USER CODE END 0 */
 
 /**
@@ -123,10 +154,33 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-
 		/* LM35 */
 		// Start ADC Conversion
-		HAL_ADC_Start_IT(&hadc1);	
+		//HAL_ADC_Start_IT(&hadc1);	
+		
+		ch11_sel();
+		HAL_ADC_Start(&hadc1);
+		HAL_ADC_PollForConversion(&hadc1, 1000);
+		force = HAL_ADC_GetValue(&hadc1);
+		HAL_ADC_Stop(&hadc1);
+		sprintf((char*)uartBuff_force, "%d\r\n", force);
+		HAL_UART_Transmit(&huart2, uartBuff_force, sizeof(uartBuff_force),HAL_MAX_DELAY);
+		
+		ch9_sel();
+		HAL_ADC_Start(&hadc1);
+		HAL_ADC_PollForConversion(&hadc1, 1000);
+		raw = HAL_ADC_GetValue(&hadc1);
+		HAL_ADC_Stop(&hadc1);
+		TempValue = (((float)raw * 330.0f)/4095.0f);// * 100;
+		sprintf((char*)uartBuff, "%0.3f\r\n", TempValue);
+		HAL_UART_Transmit(&huart2, uartBuff, sizeof(uartBuff),HAL_MAX_DELAY);
+		
+//		
+		
+		
+
+		
+		
 		HAL_Delay(1000);
 	
   }
@@ -214,14 +268,14 @@ static void MX_ADC1_Init(void)
   /** Common config
   */
   hadc1.Instance = ADC1;
-  hadc1.Init.ClockPrescaler = ADC_CLOCK_ASYNC_DIV1;
-  hadc1.Init.Resolution = ADC_RESOLUTION_10B;
+  hadc1.Init.ClockPrescaler = ADC_CLOCK_ASYNC_DIV4;
+  hadc1.Init.Resolution = ADC_RESOLUTION_12B;
   hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
-  hadc1.Init.ScanConvMode = ADC_SCAN_DISABLE;
+  hadc1.Init.ScanConvMode = ADC_SCAN_ENABLE;
   hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
   hadc1.Init.LowPowerAutoWait = DISABLE;
-  hadc1.Init.ContinuousConvMode = DISABLE;
-  hadc1.Init.NbrOfConversion = 1;
+  hadc1.Init.ContinuousConvMode = ENABLE;
+  hadc1.Init.NbrOfConversion = 2;
   hadc1.Init.DiscontinuousConvMode = DISABLE;
   hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
   hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
@@ -237,10 +291,19 @@ static void MX_ADC1_Init(void)
   */
   sConfig.Channel = ADC_CHANNEL_9;
   sConfig.Rank = ADC_REGULAR_RANK_1;
-  sConfig.SamplingTime = ADC_SAMPLETIME_2CYCLES_5;
+  sConfig.SamplingTime = ADC_SAMPLETIME_92CYCLES_5;
   sConfig.SingleDiff = ADC_SINGLE_ENDED;
   sConfig.OffsetNumber = ADC_OFFSET_NONE;
   sConfig.Offset = 0;
+  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Configure Regular Channel
+  */
+  sConfig.Channel = ADC_CHANNEL_11;
+  sConfig.Rank = ADC_REGULAR_RANK_2;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
@@ -439,27 +502,16 @@ static void MX_GPIO_Init(void)
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
-  __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1|CS_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin : PA1 */
-  GPIO_InitStruct.Pin = GPIO_PIN_1;
+  /*Configure GPIO pins : PA1 CS_Pin */
+  GPIO_InitStruct.Pin = GPIO_PIN_1|CS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : LD3_Pin */
-  GPIO_InitStruct.Pin = LD3_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(LD3_GPIO_Port, &GPIO_InitStruct);
 
 }
 
