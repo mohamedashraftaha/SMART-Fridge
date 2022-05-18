@@ -83,7 +83,8 @@ Next Steps:
 ---
 ![image](https://user-images.githubusercontent.com/75078872/169083699-6cb2ffaa-cddc-4bbc-94e2-1dc155c9a9e8.png)
 
-
+## Final Demo
+[Final Demo] (https://drive.google.com/file/d/1YnNAmWvNDu8-RO3L5acA4BO7gkvv5Gyx/view?usp=sharing)
 ------
 # Challenges
 1. We first started by using the pressure sensor MS5540C, but unfortunately this sensor wasn't fit for our project purposes. So we decided to use an FSR (force-sensitive resistor) and we were able to successfully interface with this sensor.
