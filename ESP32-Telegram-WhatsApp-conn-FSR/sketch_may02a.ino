@@ -6,6 +6,8 @@ ThingESP32 thing("shenawy", "SmartFridge", "123456789");
 
 #define RXD2 16    //port number on ESP32 (GPIO16)
 #define TXD2 17   //port number on ESP32  (GPIO17)
+#define RXD0 3    //port number on ESP32 (GPIO3)
+#define TXD0 1   //port number on ESP32  (GPIO1)
 #define Temp_VIRTUAL_CHANNEL 1
 
 const char* ssid = "shenawy";
@@ -17,6 +19,8 @@ char clientID[] = "73402040-cab0-11ec-8c44-371df593ba58";
 unsigned long previousMillis=0;
 const long INTERVAL=10000;
 int Enable_pin = 4;
+int fsrPin = 36;     // the FSR and 10K pulldown are connected to a0
+int fsrReading;     // the analog reading from the FSR resistor divide
 
 void setup() {
   // put your setup code here, to run once:
@@ -68,24 +72,35 @@ void loop() {
     Cayenne.loop();
     thing.Handle();
 
+     fsrReading = analogRead(fsrPin);
+
+    Serial.println("Analog reading = "+String(fsrReading));
+    delay(1000);
+
     if(millis()-previousMillis>=INTERVAL){
       previousMillis=millis();
 
       String msg;
       
-      if(temp>30)
+      if(temp>27)
       {
         msg="Temperature is critically high!!!: "+String(temp);
         thing.sendMsg("+201111244055", msg);
       }
-      else if(temp<10)
+      else if(temp<24)
       {
         msg="Temperature is critically low!!!: "+String(temp);
         thing.sendMsg("+201111244055", msg);
       }
 
+    if(fsrReading<600)
+    {
+      msg="You need to restock!!! Call vendor!!!";
+        thing.sendMsg("+201111244055", msg);
+    }
       
     }
+
     
 if(Serial2.available()) //while we're receiving data through the uart from the STM32 board microcontroller
   { 
@@ -93,4 +108,6 @@ if(Serial2.available()) //while we're receiving data through the uart from the S
     Serial.println(temp);   //print the final result of the temp
     Cayenne.virtualWrite(Temp_VIRTUAL_CHANNEL, temp, TYPE_TEMPERATURE, UNIT_CELSIUS);
   }  
+
+  
 }
